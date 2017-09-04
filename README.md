@@ -8,6 +8,10 @@
 [![Build Status](https://img.shields.io/travis/mickeyjsx/babel-plugin-mickey-model-validator.svg?style=flat)](https://travis-ci.org/mickeyjsx/babel-plugin-mickey-model-validator)
 [![Dependencies](https://david-dm.org/mickey/babel-plugin-mickey-model-validator/status.svg)](https://david-dm.org/mickey/babel-plugin-mickey-model-validator)
 
+## Snapshot
+
+![snapshot.png](http://ojh17srjb.bkt.gdipper.com/snapshot.png)
+
 ## Install
 
 ```
