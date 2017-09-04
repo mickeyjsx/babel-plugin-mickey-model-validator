@@ -10,7 +10,7 @@
 
 ## Snapshot
 
-![snapshot.png](http://ojh17srjb.bkt.gdipper.com/snapshot.png)
+<img src="http://ojh17srjb.bkt.gdipper.com/snapshot.png" atl="snapshot.png" height="160px">
 
 ## Install
 
