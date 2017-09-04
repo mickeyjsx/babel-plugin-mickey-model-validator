@@ -6,3 +6,26 @@
 
 [![NPM Version](https://img.shields.io/npm/v/babel-plugin-mickey-model-validator.svg?style=flat-square)](https://www.npmjs.com/package/babel-plugin-mickey-model-validator)
 [![Build Status](https://img.shields.io/travis/mickeyjsx/babel-plugin-mickey-model-validator.svg?style=flat)](https://travis-ci.org/mickeyjsx/babel-plugin-mickey-model-validator)
+
+## Install
+
+```
+npm install babel-plugin-mickey-model-validator --save-dev
+```
+
+## Usage
+
+Add the following section in your `.babelrc`:
+
+```
+{
+  "plugins": ["mickey-model-validator"]
+}
+```
+
+
+## Contributing
+
+Pull requests and stars are highly welcome.
+
+For bugs and feature requests, please [create an issue](https://github.com/mickey/babel-plugin-mickey-model-validator/issues/new).
