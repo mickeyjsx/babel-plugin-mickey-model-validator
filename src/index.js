@@ -6,7 +6,18 @@ import codeFrame from 'babel-code-frame'
 
 
 export default function (babel) {
-  const { types: t } = babel
+  const { types: t, transform } = babel
+
+  // Cache the bad code's loc, when exit exportDefaultDeclaration
+  // inject `console.warn(...)` after `export default` statement.
+  // Could not inject `console.warn(...)` just at the place where
+  // the bad code located, because the bad code may would not be
+  // executed after module loaded.
+  let cache = null
+
+  function getWarnMessage(loc) {
+    return `Probably missing "yield" keyword at method calling. (${loc.line}:${loc.column})`
+  }
 
   function getCalleeMeta(node) {
     const { callee } = node
@@ -59,13 +70,20 @@ export default function (babel) {
 
         console.log()
         console.log(chalk.inverse(filepath))
-        console.log(`Probably missing \`yield\` at method calling. (${loc.line}:${loc.column})`)
+        console.log(getWarnMessage(loc))
 
         const code = codeFrame(path.hub.file.code, loc.line, loc.column, { highlightCode: true })
         console.log()
         console.log(code)
         console.log()
         console.log()
+
+        if (process.env.NODE_ENV !== 'production' && cache) {
+          cache.push({
+            file: filepath,
+            loc,
+          })
+        }
       }
     }
   }
@@ -94,9 +112,30 @@ export default function (babel) {
     }
   }
 
-  return {
-    visitor: {
-      'ObjectMethod|ObjectProperty': visitMethod,
-    },
+  const visitor = {
+    'ObjectMethod|ObjectProperty': visitMethod,
   }
+
+  if (process.env.NODE_ENV !== 'production') {
+    visitor.ExportDefaultDeclaration = {
+      enter() {
+        cache = []
+      },
+      exit(path) {
+        if (cache && cache.length) {
+          cache.forEach(({ file, loc }) => {
+            const code = codeFrame(path.hub.file.code, loc.line, loc.column)
+            const raw = `console.warn('${file} \\n${getWarnMessage(loc)} \\n\\n${code.split('\n').join('\\n')}\\n ')`
+            const ret = transform(raw, {
+              code: true,
+              babelrc: false,
+            })
+            path.insertAfter(ret.ast.program.body[0])
+          })
+        }
+      },
+    }
+  }
+
+  return { visitor }
 }
