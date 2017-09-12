@@ -27,10 +27,14 @@ export default function (babel) {
       name = callee.name
     } else if (t.isMemberExpression(callee)) {
       let obj = callee.object
-      while (!obj.name) {
-        obj = obj.object
+      if (t.isCallExpression(obj)) {
+        name = getCalleeMeta(obj).name
+      } else {
+        while (!obj.name) {
+          obj = obj.object
+        }
+        name = obj.name
       }
-      name = obj.name
     }
 
     return { name, loc: callee.loc.start }
