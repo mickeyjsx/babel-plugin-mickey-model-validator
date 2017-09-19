@@ -30,10 +30,12 @@ export default function (babel) {
       if (t.isCallExpression(obj)) {
         name = getCalleeMeta(obj).name
       } else {
-        while (!obj.name) {
+        while (obj && !obj.name) {
           obj = obj.object
         }
-        name = obj.name
+        if (obj) {
+          name = obj.name
+        }
       }
     }
 
