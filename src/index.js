@@ -2,7 +2,7 @@
 import chalk from 'chalk'
 import { relative } from 'path'
 import flatten from 'lodash.flatten'
-import codeFrame from 'babel-code-frame'
+import codeFrame from '@babel/code-frame'
 
 
 export default function (babel) {
