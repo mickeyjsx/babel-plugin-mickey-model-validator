@@ -47,7 +47,7 @@ export default function (babel) {
       ? node.properties.map((prop) => {
         if (t.isObjectPattern(prop.value)) {
           return getNameFromObjectPattern(prop.value)
-        } else if (t.Identifier(prop.value)) {
+        } else if (t.isIdentifier(prop.value)) {
           return prop.value.name
         }
         return null
