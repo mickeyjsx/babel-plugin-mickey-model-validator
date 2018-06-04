@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-mickey-model-validator",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Validate models shipped by mickey to avoid certain syntax pitfalls.",
   "main": "./lib/index.js",
   "keywords": [
